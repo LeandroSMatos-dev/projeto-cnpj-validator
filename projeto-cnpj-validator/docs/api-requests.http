@@ -1,0 +1,232 @@
+###
+# ARQUIVO DE REQUISIÇÕES HTTP - VALIDADOR DE CNPJ
+# 
+# Use com extensões REST Client no VS Code ou IntelliJ HTTP Client
+###
+
+### Variáveis
+@baseUrl = http://localhost:8080
+@contentType = application/json
+
+###############################################################################
+# 1. CADASTRO DE EMPRESA COM CNPJ VÁLIDO (Alfanumérico)
+###############################################################################
+
+POST {{baseUrl}}/api/empresas
+Content-Type: {{contentType}}
+
+{
+  "razaoSocial": "Tech Inovação Ltda",
+  "cnpj": "12ABC34501DE35",
+  "nomeFantasia": "Tech Inova"
+}
+
+###############################################################################
+# 2. CADASTRO DE EMPRESA COM CNPJ VÁLIDO (Numérico)
+###############################################################################
+
+POST {{baseUrl}}/api/empresas
+Content-Type: {{contentType}}
+
+{
+  "razaoSocial": "Empresa Exemplo S.A.",
+  "cnpj": "90.021.382/0001-22",
+  "nomeFantasia": "Exemplo Corp"
+}
+
+###############################################################################
+# 3. CADASTRO COM CNPJ VÁLIDO (Sem Formatação)
+###############################################################################
+
+POST {{baseUrl}}/api/empresas
+Content-Type: {{contentType}}
+
+{
+  "razaoSocial": "Consultoria Alpha",
+  "cnpj": "1345C3A5000106",
+  "nomeFantasia": "Alpha Consultoria"
+}
+
+###############################################################################
+# 4. ERRO - CNPJ COM DV INCORRETO
+###############################################################################
+
+POST {{baseUrl}}/api/empresas
+Content-Type: {{contentType}}
+
+{
+  "razaoSocial": "Empresa Teste",
+  "cnpj": "12ABC34501DE00",
+  "nomeFantasia": "Teste"
+}
+
+# Resposta esperada: 400 Bad Request
+# {
+#   "cnpj": "CNPJ inválido ou com dígitos verificadores incorretos"
+# }
+
+###############################################################################
+# 5. ERRO - CNPJ COM LETRAS MINÚSCULAS
+###############################################################################
+
+POST {{baseUrl}}/api/empresas
+Content-Type: {{contentType}}
+
+{
+  "razaoSocial": "Empresa Beta",
+  "cnpj": "1345c3a5000106",
+  "nomeFantasia": "Beta Corp"
+}
+
+# Resposta esperada: 400 Bad Request
+# {
+#   "cnpj": "CNPJ inválido ou com dígitos verificadores incorretos"
+# }
+
+###############################################################################
+# 6. ERRO - CNPJ COM LETRAS NO DV
+###############################################################################
+
+POST {{baseUrl}}/api/empresas
+Content-Type: {{contentType}}
+
+{
+  "razaoSocial": "Empresa Gamma",
+  "cnpj": "90.024.420/0001A2",
+  "nomeFantasia": "Gamma"
+}
+
+# Resposta esperada: 400 Bad Request
+
+###############################################################################
+# 7. ERRO - CNPJ ZERADO
+###############################################################################
+
+POST {{baseUrl}}/api/empresas
+Content-Type: {{contentType}}
+
+{
+  "razaoSocial": "Empresa Delta",
+  "cnpj": "00000000000000",
+  "nomeFantasia": "Delta"
+}
+
+# Resposta esperada: 400 Bad Request
+
+###############################################################################
+# 8. ERRO - MÚLTIPLOS CAMPOS INVÁLIDOS
+###############################################################################
+
+POST {{baseUrl}}/api/empresas
+Content-Type: {{contentType}}
+
+{
+  "razaoSocial": "",
+  "cnpj": "12ABC34501DE00",
+  "nomeFantasia": "Teste"
+}
+
+# Resposta esperada: 400 Bad Request com múltiplos erros
+# {
+#   "razaoSocial": "Razão social é obrigatória",
+#   "cnpj": "CNPJ inválido ou com dígitos verificadores incorretos"
+# }
+
+###############################################################################
+# 9. ERRO - CNPJ VAZIO
+###############################################################################
+
+POST {{baseUrl}}/api/empresas
+Content-Type: {{contentType}}
+
+{
+  "razaoSocial": "Empresa Epsilon",
+  "cnpj": "",
+  "nomeFantasia": "Epsilon"
+}
+
+# Resposta esperada: 400 Bad Request
+
+###############################################################################
+# 10. ERRO - CNPJ NULO
+###############################################################################
+
+POST {{baseUrl}}/api/empresas
+Content-Type: {{contentType}}
+
+{
+  "razaoSocial": "Empresa Zeta",
+  "cnpj": null,
+  "nomeFantasia": "Zeta"
+}
+
+# Resposta esperada: 400 Bad Request
+
+###############################################################################
+# 11. ATUALIZAÇÃO DE EMPRESA COM CNPJ VÁLIDO
+###############################################################################
+
+PUT {{baseUrl}}/api/empresas/1
+Content-Type: {{contentType}}
+
+{
+  "razaoSocial": "Tech Inovação Ltda - Atualizada",
+  "cnpj": "R55231B3000757",
+  "nomeFantasia": "Tech Inova Plus"
+}
+
+###############################################################################
+# 12. CNPJ COM ESPAÇOS (Deve ser aceito)
+###############################################################################
+
+POST {{baseUrl}}/api/empresas
+Content-Type: {{contentType}}
+
+{
+  "razaoSocial": "Empresa Theta",
+  "cnpj": "  12ABC34501DE35  ",
+  "nomeFantasia": "Theta"
+}
+
+###############################################################################
+# 13. CNPJ NUMÉRICO COM FORMATAÇÃO COMPLETA
+###############################################################################
+
+POST {{baseUrl}}/api/empresas
+Content-Type: {{contentType}}
+
+{
+  "razaoSocial": "Empresa Iota Comercial",
+  "cnpj": "90.024.778/0001-23",
+  "nomeFantasia": "Iota Com"
+}
+
+###############################################################################
+# 14. CNPJ COM DV ZERADOS (Válido)
+###############################################################################
+
+POST {{baseUrl}}/api/empresas
+Content-Type: {{contentType}}
+
+{
+  "razaoSocial": "Empresa Kappa",
+  "cnpj": "90.025.255/0001-00",
+  "nomeFantasia": "Kappa"
+}
+
+###############################################################################
+# 15. CNPJ ALFANUMÉRICO COM FORMATAÇÃO
+###############################################################################
+
+POST {{baseUrl}}/api/empresas
+Content-Type: {{contentType}}
+
+{
+  "razaoSocial": "Empresa Lambda Digital",
+  "cnpj": "12.ABC.345/01DE-35",
+  "nomeFantasia": "Lambda Digital"
+}
+
+###
+# FIM DAS REQUISIÇÕES
+###

@@ -1,0 +1,338 @@
+{
+	"info": {
+		"name": "CNPJ Validator API",
+		"description": "Collection para testar a API de validação de CNPJ alfanumérico",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Cadastros Válidos",
+			"item": [
+				{
+					"name": "1. Cadastro - CNPJ Alfanumérico Válido",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"razaoSocial\": \"Tech Inovação Ltda\",\n  \"cnpj\": \"12ABC34501DE35\",\n  \"nomeFantasia\": \"Tech Inova\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/empresas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"empresas"
+							]
+						}
+					}
+				},
+				{
+					"name": "2. Cadastro - CNPJ Numérico com Formatação",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"razaoSocial\": \"Empresa Exemplo S.A.\",\n  \"cnpj\": \"90.021.382/0001-22\",\n  \"nomeFantasia\": \"Exemplo Corp\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/empresas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"empresas"
+							]
+						}
+					}
+				},
+				{
+					"name": "3. Cadastro - CNPJ Alfanumérico Sem Formatação",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"razaoSocial\": \"Consultoria Alpha\",\n  \"cnpj\": \"1345C3A5000106\",\n  \"nomeFantasia\": \"Alpha Consultoria\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/empresas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"empresas"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Erros de Validação",
+			"item": [
+				{
+					"name": "4. ERRO - CNPJ com DV Incorreto",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"razaoSocial\": \"Empresa Teste\",\n  \"cnpj\": \"12ABC34501DE00\",\n  \"nomeFantasia\": \"Teste\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/empresas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"empresas"
+							]
+						}
+					}
+				},
+				{
+					"name": "5. ERRO - CNPJ com Letras Minúsculas",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"razaoSocial\": \"Empresa Beta\",\n  \"cnpj\": \"1345c3a5000106\",\n  \"nomeFantasia\": \"Beta Corp\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/empresas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"empresas"
+							]
+						}
+					}
+				},
+				{
+					"name": "6. ERRO - CNPJ com Letras no DV",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"razaoSocial\": \"Empresa Gamma\",\n  \"cnpj\": \"90.024.420/0001A2\",\n  \"nomeFantasia\": \"Gamma\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/empresas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"empresas"
+							]
+						}
+					}
+				},
+				{
+					"name": "7. ERRO - CNPJ Zerado",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"razaoSocial\": \"Empresa Delta\",\n  \"cnpj\": \"00000000000000\",\n  \"nomeFantasia\": \"Delta\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/empresas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"empresas"
+							]
+						}
+					}
+				},
+				{
+					"name": "8. ERRO - Múltiplos Campos Inválidos",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"razaoSocial\": \"\",\n  \"cnpj\": \"12ABC34501DE00\",\n  \"nomeFantasia\": \"Teste\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/empresas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"empresas"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Atualização",
+			"item": [
+				{
+					"name": "9. Atualizar Empresa",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"razaoSocial\": \"Tech Inovação Ltda - Atualizada\",\n  \"cnpj\": \"R55231B3000757\",\n  \"nomeFantasia\": \"Tech Inova Plus\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/empresas/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"empresas",
+								"1"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Casos Especiais",
+			"item": [
+				{
+					"name": "10. CNPJ com Espaços (Válido)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"razaoSocial\": \"Empresa Theta\",\n  \"cnpj\": \"  12ABC34501DE35  \",\n  \"nomeFantasia\": \"Theta\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/empresas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"empresas"
+							]
+						}
+					}
+				},
+				{
+					"name": "11. CNPJ com DV Zerados (Válido)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"razaoSocial\": \"Empresa Kappa\",\n  \"cnpj\": \"90.025.255/0001-00\",\n  \"nomeFantasia\": \"Kappa\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/empresas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"empresas"
+							]
+						}
+					}
+				}
+			]
+		}
+	]
+}
